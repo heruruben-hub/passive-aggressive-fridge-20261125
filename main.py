@@ -34,6 +34,11 @@ def main() -> int:
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     with open(OUTPUT_PATH, "w", encoding="utf-8", newline="") as handle:
         handle.write(ENTRY)
+    # Read the file back and confirm what landed on disk is exactly the note.
+    with open(OUTPUT_PATH, "r", encoding="utf-8", newline="") as handle:
+        written = handle.read()
+    if written != ENTRY:
+        raise ValueError("written file does not match the note")
     print("Wrote %d characters to %s" % (len(ENTRY), OUTPUT_PATH))
     return 0
 
